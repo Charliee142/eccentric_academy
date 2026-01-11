@@ -1,0 +1,46 @@
+{% extends "academy/base.html" %}
+
+{% block title %}Verify Email | Eccentric Academy{% endblock %}
+
+{% block content %}
+<section class="py-5" style="background: linear-gradient(135deg, #0f172a, #020617); min-height:100vh;">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-md-6 text-center">
+                <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5">
+
+                    <div class="mb-4">
+                        <span class="fs-1">📧</span>
+                    </div>
+
+                    <h2 class="fw-bold mb-3">
+                        Verify Your Email Address
+                    </h2>
+
+                    <p class="text-muted">
+                        We’ve sent a verification link to your email.
+                        Please confirm your email to activate your account.
+                    </p>
+
+                    <p class="small text-muted">
+                        Didn’t see the email? Check your spam folder.
+                    </p>
+
+                    <a href="{% url 'account_login' %}"
+                       class="btn mt-3 text-white px-4"
+                       style="background:#0ea5a5;">
+                        Go to Login
+                    </a>
+
+                </div>
+
+                <p class="small text-light mt-4 opacity-75">
+                    Security is important in cybersecurity 
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}

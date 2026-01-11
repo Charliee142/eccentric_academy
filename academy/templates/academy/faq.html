@@ -1,0 +1,67 @@
+{% extends "academy/base.html" %}
+{% block title %}FAQ | Eccentric Academy{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero text-center">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-3 animate-pop">Frequently Asked Questions</h1>
+        <p class="lead mb-4">
+            Find answers to common questions about courses, plans, enrollment, and more.
+        </p>
+    </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="section">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Frequently Asked Questions</h2>
+            <p class="text-muted">Answers to common questions about our plans and courses</p>
+        </div>
+
+        <div class="accordion" id="faqAccordion">
+            {% for faq in faqs %}
+            <div class="accordion-item shadow-sm mb-3 animate-pop">
+                <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                    <button class="accordion-button {% if not forloop.first %}collapsed{% endif %} fw-bold"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapse{{ forloop.counter }}"
+                            aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+                            aria-controls="collapse{{ forloop.counter }}">
+                        {{ faq.question }}
+                    </button>
+                </h2>
+
+                <div id="collapse{{ forloop.counter }}"
+                     class="accordion-collapse collapse {% if forloop.first %}show{% endif %}"
+                     aria-labelledby="heading{{ forloop.counter }}"
+                     data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        {{ faq.answer }}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center text-muted">No FAQs added yet.</p>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section dark text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-3 animate-pop">Have More Questions?</h2>
+        <p class="lead mb-4">Reach out to our support team anytime — we’re here to help you succeed!</p>
+        <a href="{% url 'contact' %}" class="btn btn-primary btn-lg px-5 animate-pulse">
+            Contact Support
+        </a>
+    </div>
+</section>
+
+{% endblock %}

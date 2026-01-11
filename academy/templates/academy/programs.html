@@ -1,0 +1,82 @@
+{% extends "academy/base.html" %}
+{% load static %}
+
+{% block content %}
+<style>
+    .program-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    transition: all 0.25s ease;
+}
+
+.program-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+.program-icon {
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+}
+
+</style>
+<!-- PROGRAM -->
+<section id="program" class="section py-5">
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="text-center mb-5">
+            <span class="badge bg-info text-dark px-3 py-2 mb-2">
+                Curriculum
+            </span>
+            <h2 class="fw-bold">What You Will Learn</h2>
+            <p class="text-muted">
+                Structured from beginner to advanced cybersecurity skills
+            </p>
+        </div>
+
+        <!-- OUTCOMES -->
+        <div class="row g-4 justify-content-center">
+            {% for outcome in outcomes %}
+            <div class="col-12 col-sm-6 col-md-4"
+                 data-aos="fade-up"
+                 data-aos-delay="{{ forloop.counter0|add:'1' }}00">
+
+                <div class="program-card text-center h-100 p-4">
+
+                    <!-- ICON IMAGE -->
+                    <img src="{{ outcome.icon_image.url }}"
+                         alt="{{ outcome.title }}"
+                         class="program-icon mb-3">
+
+                    <!-- TITLE -->
+                    <h5 class="fw-semibold mb-2">
+                        {{ outcome.title }}
+                    </h5>
+
+                    <!-- LEVEL -->
+                    <span class="badge
+                        {% if outcome.level == 'beginner' %} bg-success
+                        {% elif outcome.level == 'intermediate' %} bg-warning text-dark
+                        {% else %} bg-danger
+                        {% endif %}
+                    ">
+                        {{ outcome.get_level_display }}
+                    </span>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ once: true, duration: 800 });
+</script>
+
+{% endblock %}

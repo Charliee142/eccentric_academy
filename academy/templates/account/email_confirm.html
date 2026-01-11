@@ -1,0 +1,30 @@
+{% extends "academy/base.html" %}
+
+{% block title %}Confirm Email | Eccentric Academy{% endblock %}
+
+{% block content %}
+<section class="py-5" style="background:linear-gradient(135deg,#0f172a,#020617);min-height:100vh;">
+    <div class="container">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-6">
+                <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5">
+
+                    <h2 class="fw-bold mb-3">Confirm Your Email</h2>
+                    <p class="text-muted">
+                        Please confirm your email address to activate your account.
+                    </p>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <button class="btn text-white px-4 mt-3"
+                                style="background:#0ea5a5;">
+                            ✅ Confirm Email
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,347 @@
+{% extends "academy/base.html" %}
+{% block title %}Ethical Hacking Training | Eccentric Academy{% endblock %}
+
+{% block content %}
+
+<style>
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.time-box {
+    background: #111827;
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    min-width: 90px;
+}
+
+.time-box span {
+    font-size: 30px;
+    font-weight: bold;
+    display: block;
+}
+
+.time-box small {
+    font-size: 12px;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+/* Animations */
+.animate-pulse {
+    animation: pulse 1.8s infinite;
+}
+
+.animate-pop {
+    animation: pop 0.6s ease-out;
+}
+
+.animate-flip {
+    animation: flip 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 rgba(0,123,255,0.6); }
+    50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(0,123,255,0.8); }
+    100% { transform: scale(1); }
+}
+
+@keyframes pop {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flip {
+    from { transform: rotateX(0); }
+    to { transform: rotateX(10deg); }
+}
+.program-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.program-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0,0,0,.12);
+}
+
+.icon-box {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #0dcaf0, #0d6efd);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin: 0 auto;
+}
+.program-icon {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,.15));
+}
+
+.icon-box {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #0dcaf0, #0d6efd);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+.program-card:hover .program-icon {
+    transform: scale(1.1) rotate(3deg);
+    transition: transform 0.3s ease;
+}
+
+</style>
+
+
+<!-- HERO -->
+<section class="hero text-center">
+    <div class="container">
+        <h1 class="display-5 mb-3">Become a Real Ethical Hacker</h1>
+        <p class="lead mb-4">
+            From zero to job-ready. Learn ethical hacking the right way with hands-on labs.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="#pricing" class="btn btn-primary btn-lg">Enroll Now</a>
+            <a href="{% url 'programs' %}" class="btn btn-outline-light btn-lg">View Curriculum</a>
+        </div>
+    </div>
+</section>
+
+<!-- PROGRAM -->
+<section id="program" class="section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge bg-info text-dark px-3 py-2 mb-2">
+                Curriculum
+            </span>
+            <h2 class="fw-bold">What You Will Learn</h2>
+            <p class="text-muted">
+                Structured from beginner to advanced cybersecurity skills
+            </p>
+        </div>
+
+        <div class="row g-4">
+            {% for outcome in outcomes %}
+            <div class="col-md-4"
+                 data-aos="fade-up"
+                 data-aos-delay="{{ forloop.counter0|add:'1' }}00">
+
+                <div class="program-card h-100">
+                   
+    <img src="{{ outcome.icon_image.url }}"
+         alt="{{ outcome.title }} icon"
+         class="program-icon " style="width: auto; height:70px;">
+
+
+
+                    <h5 class="fw-semibold mt-3 mb-2">
+                        {{ outcome.title }}
+                    </h5>
+
+                    <span class="badge
+                        {% if outcome.level == 'beginner' %} bg-success
+                        {% elif outcome.level == 'intermediate' %} bg-warning text-dark
+                        {% else %} bg-danger
+                        {% endif %}
+                    ">
+                        {{ outcome.get_level_display }}
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- LEARNING STYLE -->
+<section class="section dark text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-3">How You Will Learn</h2>
+        <p class="lead">
+            Live instructor-led classes, hands-on labs, real vulnerable applications,
+            weekly challenges, and a final penetration testing project.
+        </p>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="section">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-5">Pricing Plans</h2>
+
+        <div class="row g-4">
+         {% for plan in plans %}
+            <div class="col-md-4">
+                <div class="card pricing-card highlight h-100 text-center p-4 ">
+                    <h3>{{ plan.name }}</h3>
+                                <a href="{% url 'plan_detail' plan.slug %}" class="btn btn-secondary  mt-3">
+                View Courses
+            </a>
+
+                    <h3 class="text-dark fw-bold mt-3">NGN{{ plan.price }}</h3>
+                    <p class="text-primary">{{ plan.duration_weeks }} Weeks • {{ plan.features }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+</section>
+
+
+<!-- CTA -->
+{% if active_cohort %}
+<section id="contact" class="section dark text-center py-5">
+    <div class="container">
+        <h2 class="fw-bold mb-3 animate-pop">🚀 Ready to Start?</h2>
+
+        <p class="lead mb-2">
+            Registration closes in:
+        </p>
+
+        <!-- Countdown -->
+        <div id="countdown"
+             class="countdown mb-3"
+             data-deadline="{{ active_cohort.registration_deadline|date:'c' }}">
+            <div class="time-box">
+                <span id="days">00</span>
+                <small>Days</small>
+            </div>
+            <div class="time-box">
+                <span id="hours">00</span>
+                <small>Hours</small>
+            </div>
+            <div class="time-box">
+                <span id="minutes">00</span>
+                <small>Minutes</small>
+            </div>
+            <div class="time-box">
+                <span id="seconds">00</span>
+                <small>Seconds</small>
+            </div>
+        </div>
+
+        <!-- Slots -->
+        <p class="fw-bold text-warning mb-4">
+            🔥 Only {{ active_cohort.slots_remaining }} seats remaining out of {{ active_cohort.max_slots }}!
+        </p>
+
+        {% if active_cohort.is_open %}
+            <a href="{% url 'register_now' %}"
+               class="btn btn-primary btn-lg px-5 animate-pulse">
+                Register Now
+            </a>
+        {% else %}
+            <button class="btn btn-secondary btn-lg px-5" disabled>
+                Registration Closed
+            </button>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+
+
+
+<script>
+    // ⏰ Countdown deadline
+    const deadline = new Date("2026-02-01T23:59:59").getTime();
+
+    // 🎟️ Slot counter
+    let slots = 25;
+    const slotElement = document.getElementById("slots");
+    const ctaBtn = document.getElementById("ctaBtn");
+
+    // Reduce slots randomly (psychological effect)
+    setInterval(() => {
+        if (slots > 3) {
+            slots--;
+            slotElement.innerText = slots;
+        }
+    }, 15000); // every 15 seconds
+
+    // Countdown timer
+    const timer = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = deadline - now;
+
+        if (distance < 0 || slots <= 0) {
+            clearInterval(timer);
+            document.getElementById("countdown").innerHTML =
+                "<p class='text-danger fw-bold'>Registration Closed</p>";
+            ctaBtn.classList.remove("animate-pulse");
+            ctaBtn.classList.add("btn-secondary");
+            ctaBtn.innerText = "Registration Closed";
+            ctaBtn.href = "#";
+            return;
+        }
+
+        document.getElementById("days").innerText =
+            Math.floor(distance / (1000 * 60 * 60 * 24));
+        document.getElementById("hours").innerText =
+            Math.floor((distance / (1000 * 60 * 60)) % 24);
+        document.getElementById("minutes").innerText =
+            Math.floor((distance / (1000 * 60)) % 60);
+        document.getElementById("seconds").innerText =
+            Math.floor((distance / 1000) % 60);
+
+        // Last day urgency
+        if (distance < 86400000) {
+            ctaBtn.innerText = "Last Chance – Register Now";
+        }
+    }, 1000);
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const countdown = document.getElementById("countdown");
+    if (!countdown) return;
+
+    const deadline = new Date(countdown.dataset.deadline).getTime();
+
+    function updateTimer() {
+        const now = new Date().getTime();
+        const distance = deadline - now;
+
+        if (distance <= 0) {
+            document.getElementById("days").innerText = "00";
+            document.getElementById("hours").innerText = "00";
+            document.getElementById("minutes").innerText = "00";
+            document.getElementById("seconds").innerText = "00";
+            return;
+        }
+
+        document.getElementById("days").innerText =
+            Math.floor(distance / (1000 * 60 * 60 * 24));
+        document.getElementById("hours").innerText =
+            Math.floor((distance / (1000 * 60 * 60)) % 24);
+        document.getElementById("minutes").innerText =
+            Math.floor((distance / (1000 * 60)) % 60);
+        document.getElementById("seconds").innerText =
+            Math.floor((distance / 1000) % 60);
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+});
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,224 @@
+{% extends "academy/base.html" %}
+{% block title %}{{ plan.name }} | Eccentric Academy{% endblock %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* SECTION */
+.section-dark {
+    background: #0b1324;
+    color: #fff;
+}
+
+/* COURSE CARD */
+.course-card {
+    background: #111a33;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 60px rgba(14,165,165,0.35);
+}
+
+/* IMAGE */
+.course-image {
+    position: relative;
+    height: 190px;
+    overflow: hidden;
+}
+
+.course-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* OVERLAY GRADIENT */
+.course-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.8),
+        rgba(0,0,0,0)
+    );
+}
+
+/* INCLUDED BADGE */
+.course-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: #0ea5a5;
+    color: #000;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 50px;
+    z-index: 2;
+}
+
+/* CONTENT */
+.course-content {
+    padding: 22px;
+}
+
+.course-content h5 {
+    color: #fff;
+}
+
+</style>
+
+<!-- PLAN HERO -->
+<section class="hero text-center">
+    <div class="container">
+        <span class="badge bg-warning text-dark mb-3">
+            {{ plan.get_level_display }}
+        </span>
+
+        <h1 class="display-5 fw-bold mt-3">
+            {{ plan.name }}
+        </h1>
+
+        <p class="lead mt-3">
+            {{ plan.description }}
+        </p>
+
+        <h2 class="fw-bold mt-4">
+            ₦{{ plan.price }}
+        </h2>
+
+        <p class="text-light">
+            {{ plan.duration_weeks }} Weeks Full Training Access
+        </p>
+
+        {% if owned %}
+            <span class="badge bg-success p-3 fs-6 mt-3">
+                ✅ You already own this plan
+            </span>
+        {% else %}
+            <a href="{% url 'paystack_init' plan.slug %}"
+               class="btn btn-primary btn-lg px-5 mt-4 animate-pulse">
+                Enroll Now
+            </a>
+        {% endif %}
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+    <div class="container">
+        <h2 class="fw-bold text-center mb-5">
+            What This Plan Gives You
+        </h2>
+
+        <div class="row g-4 justify-content-center">
+            {% for feature in plan.features.splitlines %}
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm p-4 text-center">
+                    <h5 class="fw-semibold">✔ {{ feature }}</h5>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- INCLUDED COURSES -->
+<section class="section section-dark">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="badge bg-info text-dark px-3 py-2 mb-2">
+                Full Curriculum
+            </span>
+            <h2 class="fw-bold">
+                Courses Included in This Plan
+            </h2>
+            <p class="mt-2 text-light">
+                A structured learning path designed to make you job-ready
+            </p>
+        </div>
+
+        <div class="row g-4">
+            {% for course in plan.courses.all %}
+            <div class="col-md-6 col-lg-4">
+                <div class="course-card h-100">
+
+                    <!-- Image -->
+                    <div class="course-image">
+                        <img src="{{ course.featured_image.url }}"
+                             alt="{{ course.title }}">
+                        <span class="course-badge">
+                            Included
+                        </span>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="course-content">
+                        <h5 class="fw-bold mb-2">
+                            {{ course.title }}
+                        </h5>
+
+                        <p class="text-light small mb-3">
+                            {{ course.description|truncatewords:20 }}
+                        </p>
+
+                        <div class="d-flex justify-content-between align-items-center">
+    <span class="badge bg-secondary">
+        {% if course.level %}
+            {{ course.get_level_display }}
+        {% else %}
+            All Levels
+        {% endif %}
+    </span>
+
+    {% if course in enrolled_courses %}
+        <span class="text-success fw-semibold">
+            ✔ Access Granted
+        </span>
+    {% else %}
+        <span class="text-warning fw-semibold">
+            🔒 Locked
+        </span>
+    {% endif %}
+</div>
+
+                    </div>
+
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center text-muted">
+                No courses available yet.
+            </p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- FINAL CTA -->
+<section class="section text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-3">
+            Ready to Become an Ethical Hacker?
+        </h2>
+
+        <p class="lead mb-4">
+            Join the {{ plan.name }} and gain real-world cybersecurity skills.
+        </p>
+
+        {% if not owned %}
+        <a href="{% url 'paystack_init' plan.slug %}"
+           class="btn btn-primary btn-lg px-5 animate-pulse">
+            Pay ₦{{ plan.price }} & Get Full Access
+        </a>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

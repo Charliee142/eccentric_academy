@@ -1,0 +1,163 @@
+{% extends "academy/base.html" %}
+{% block title %}Student Dashboard | Eccentric Academy{% endblock %}
+
+{% block content %}
+
+<!-- DASHBOARD HERO -->
+<section class="section pb-4">
+    <div class="container">
+        <h1 class="fw-bold mb-2">
+            Welcome Back 👋
+        </h1>
+        <p class="text-muted">
+            Continue your ethical hacking journey and track your progress.
+        </p>
+    </div>
+</section>
+
+{% if enrollments %}
+
+<!-- STATS -->
+<section class="section pt-0">
+    <div class="container">
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4 text-center">
+                    <h6 class="text-muted">Active Plans</h6>
+                    <h2 class="fw-bold">{{ enrollments|length }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4 text-center">
+                    <h6 class="text-muted">Total Courses</h6>
+                    <h2 class="fw-bold">
+                        {% with total=0 %}
+                        {% for e in enrollments %}
+                            {% with total=total|add:e.plan.courses.count %}
+                            {% endwith %}
+                        {% endfor %}
+                        {{ total }}
+                        {% endwith %}
+                    </h2>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4 text-center">
+                    <h6 class="text-muted">Status</h6>
+                    <h5 class="fw-bold text-success">Learning in Progress</h5>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- PLANS + COURSES -->
+<section class="section pt-0">
+    <div class="container">
+
+        {% for enrollment in enrollments %}
+        <div class="card shadow-lg mb-5">
+            <div class="card-body p-4">
+
+                <!-- PLAN HEADER -->
+                <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+                    <div>
+                        <h3 class="fw-bold mb-1">
+                            {{ enrollment.plan.name }}
+                        </h3>
+                        <span class="badge bg-primary">
+                            {{ enrollment.plan.get_level_display }}
+                        </span>
+                        <span class="badge bg-success">
+                            Active
+                        </span>
+                    </div>
+
+                    <div class="text-end">
+                        <p class="mb-1 fw-semibold">
+                            Duration: {{ enrollment.plan.duration_weeks }} Weeks
+                        </p>
+                        <small class="text-muted">
+                            Full Access Granted
+                        </small>
+                    </div>
+                </div>
+
+                <!-- PROGRESS BAR (UI READY) -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between mb-1">
+                        <small class="text-muted">Overall Progress</small>
+                        <small class="fw-bold">0%</small>
+                    </div>
+                    <div class="progress" style="height: 10px;">
+                        <div class="progress-bar bg-success" style="width: 5%"></div>
+                    </div>
+                </div>
+
+                <!-- COURSES -->
+                <div class="row g-4">
+                    {% for course in enrollment.plan.courses.all %}
+                    <div class="col-md-4">
+                        <div class="card h-100 shadow-sm pricing-card">
+
+                            <img src="{{ course.featured_image.url }}"
+                                 class="card-img-top"
+                                 alt="{{ course.title }}">
+
+                            <div class="card-body">
+                                <h5 class="fw-bold">
+                                    {{ course.title }}
+                                </h5>
+
+                                <p class="text-muted">
+                                    {{ course.description|truncatewords:14 }}
+                                </p>
+                            </div>
+
+                            <div class="card-footer bg-transparent border-0">
+                                <a href="#"
+                                   class="btn btn-primary w-100">
+                                    Continue Learning →
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+{% else %}
+
+<!-- EMPTY STATE -->
+<section class="section text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-3">
+            🎯 Start Your Journey
+        </h2>
+
+        <p class="lead mb-4">
+            You haven’t enrolled in any plan yet.
+            Choose a track and begin your ethical hacking career.
+        </p>
+
+        <a href="{% url 'home' %}"
+           class="btn btn-primary btn-lg px-5 animate-pulse">
+            View Pricing Plans
+        </a>
+    </div>
+</section>
+
+{% endif %}
+
+{% endblock %}

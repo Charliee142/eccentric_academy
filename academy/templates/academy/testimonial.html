@@ -1,0 +1,67 @@
+{% extends "academy/base.html" %}
+{% load static %}
+{% block title %}Student Testimonials | Eccentric Academy{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero text-center">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-3">What Our Students Say</h1>
+        <p class="lead mb-4">Real feedback from students who launched their careers in cybersecurity.</p>
+    </div>
+</section>
+
+<!-- TESTIMONIALS GRID -->
+<section class="section bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">What Our Students Say</h2>
+            <p class="text-muted">Real experiences from our ethical hacking trainees</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            {% for testimonial in testimonials %}
+            <div class="col-12 col-sm-6 col-md-4">
+                <div class="card shadow-lg h-100 p-4 text-center animate-pop">
+
+                    <!-- Student Image -->
+                    <img src="{{ testimonial.image.url }}"
+                         class="rounded-circle mx-auto mb-3 shadow-sm"
+                         style="width:120px;height:120px;"
+                         alt="{{ testimonial.name }}">
+
+                    <!-- Quote -->
+                    <p class="lead fst-italic mb-3">"{{ testimonial.quote }}"</p>
+
+                    <!-- Name & Role -->
+                    <h5 class="fw-bold mb-1">{{ testimonial.name }}</h5>
+                    {% if testimonial.role %}
+                    <small class="text-muted mb-2 d-block">{{ testimonial.role }}</small>
+                    {% endif %}
+
+                    <!-- Rating -->
+                    <div class="text-warning mb-2">
+                        {{ testimonial.get_rating_display }}
+                    </div>
+
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center text-muted">No testimonials yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- CTA -->
+<section class="section text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-3 animate-pop">Join Our Students Today!</h2>
+        <p class="lead mb-4">Learn hands-on ethical hacking and launch your career with Eccentric Academy.</p>
+        <a href="{% url 'home' %}#pricing" class="btn btn-primary btn-lg px-5 animate-pulse">
+            View Pricing Plans
+        </a>
+    </div>
+</section>
+
+{% endblock %}

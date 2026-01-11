@@ -1,0 +1,162 @@
+{% extends "academy/base.html" %}
+{% load static %}
+{% block title %}Contact Us | Eccentric Academy{% endblock %}
+
+{% block content %}
+<style>
+    @media (max-width: 576px) {
+    .btn.rounded-circle {
+        padding: 10px !important;
+    }
+
+    .btn img {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+</style>
+<!-- HERO -->
+<section class="hero text-center">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-3 animate-pop">Get In Touch With Us</h1>
+        <p class="lead mb-4">
+            Have questions about our courses or plans? Our team is here to help. Fill the form or reach us via email or social media.
+        </p>
+    </div>
+</section>
+
+<!-- CONTACT FORM + INFO (Floating Card Style) -->
+<section class="section position-relative mt-3" style="margin-top:-80px;">
+    <div class="container">
+        <div class="card shadow-lg p-5 rounded-4 animate-pop" style="background: linear-gradient(135deg, #0d6efd, #0ea5a5); color:#fff;">
+            <div class="row g-4">
+
+                <!-- Contact Form -->
+                <div class="col-md-7">
+                    <h2 class="fw-bold mb-4">Send Us a Message</h2>
+                    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} mt-3">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+                    <form id="contactForm" method="POST" action="{% url 'contact' %}">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="id_name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="id_name" name="name" placeholder="John Doe" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="id_email" name="email" placeholder="you@example.com" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="id_subject" name="subject" placeholder="Course Inquiry" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_message" class="form-label">Message</label>
+                            <textarea class="form-control" id="id_message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-light btn-lg fw-bold animate-pulse">
+                            Send Message
+                        </button>
+                    </form>
+                    <div id="contactAlert"></div>
+                </div>
+
+                <!-- Contact Info + Social -->
+                <div class="col-md-5 d-flex flex-column justify-content-center">
+                    <h2 class="fw-bold mb-4">Contact Info</h2>
+                    <p><strong>Email:</strong> <a href="mailto:info@eccentricacademy.com" class="text-white">info@eccentricacademy.com</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+2349136823282" class="text-white">+234 913 682 3282</a></p>
+                    <p><strong>Address:</strong> 123 Cybersecurity Lane, Garki, FCT Abuja, Nigeria</p>
+
+                    <hr class="border-light">
+
+                    <h5 class="fw-bold mb-3">Follow Us</h5>
+                   <div class="d-flex gap-3">
+    {% for social in social_links %}
+        <a href="{{ social.url }}"
+           target="_blank"
+           class="btn btn-outline-light rounded-circle p-3 animate-pop">
+
+            {% if social.icon_image %}
+                <img src="{{ social.icon_image.url }}"
+                     alt="{{ social.platform }}"
+                     style="width:22px;height:22px;">
+            {% else %}
+                <!-- fallback -->
+                <span class="fw-bold text-uppercase">
+                    {{ social.platform|slice:":1" }}
+                </span>
+            {% endif %}
+        </a>
+    {% endfor %}
+</div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MAP -->
+<section class="section  text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-4 animate-pop">Find Us Here</h2>
+        <div class="ratio ratio-16x9 shadow-lg rounded animate-pop">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!..." 
+                    style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-3 animate-pop">Ready to Start Learning?</h2>
+        <p class="lead mb-4">Join Eccentric Academy and launch your career in ethical hacking.</p>
+        <a href="{% url 'home' %}#pricing" class="btn btn-primary btn-lg px-5 animate-pulse">
+            View Pricing Plans
+        </a>
+    </div>
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $("#contactForm").submit(function(e) {
+        e.preventDefault(); // prevent default form submit
+
+        let formData = $(this).serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'contact' %}",
+            data: formData,
+            success: function(response) {
+                $("#contactAlert").html(
+                    '<div class="alert alert-success mt-3">Your message has been sent successfully!</div>'
+                );
+                $("#contactForm")[0].reset();
+            },
+            error: function(xhr, status, error) {
+                $("#contactAlert").html(
+                    '<div class="alert alert-danger mt-3">An error occurred. Please try again.</div>'
+                );
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

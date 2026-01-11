@@ -1,0 +1,232 @@
+{% extends "academy/base.html" %}
+{% load static %}
+{% block title %}About Us | Eccentric Academy{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero text-center">
+    <div class="container">
+        <h1 class="display-5 fw-bold">
+            About Eccentric Academy
+        </h1>
+        <p class="lead mt-3">
+            Training the next generation of ethical hackers through real-world practice.
+        </p>
+    </div>
+</section>
+
+<!-- WHO WE ARE -->
+<section class="section">
+    <div class="container">
+        <div class="row align-items-center g-5">
+
+            <div class="col-md-6">
+                <h2 class="fw-bold mb-3">
+                    Who We Are
+                </h2>
+                <p class="lead">
+                    Eccentric Academy is a hands-on cybersecurity training academy built to
+                    turn beginners into confident ethical hackers.
+                </p>
+                <p>
+                    We focus on real-world attacks, real vulnerable applications,
+                    and real defensive techniques — not theory-only learning.
+                </p>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow-lg p-4">
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-3">✔ Real-world hacking labs</li>
+                        <li class="mb-3">✔ Instructor-led training</li>
+                        <li class="mb-3">✔ Career-focused curriculum</li>
+                        <li class="mb-3">✔ Beginner to Advanced tracks</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- MISSION -->
+<section class="section dark text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-3">
+            Our Mission
+        </h2>
+        <p class="lead">
+            To make ethical hacking education practical, affordable,
+            and accessible to students across Africa and beyond.
+        </p>
+    </div>
+</section>
+
+<!-- HOW WE TRAIN -->
+<section class="section">
+    <div class="container">
+        <h2 class="fw-bold text-center mb-5">
+            How We Train Ethical Hackers
+        </h2>
+
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm p-4">
+                    <h4 class="fw-bold">Hands-On Labs</h4>
+                    <p>
+                        Practice on intentionally vulnerable systems
+                        designed to simulate real attacks.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm p-4">
+                    <h4 class="fw-bold">Real Tools</h4>
+                    <p>
+                        Learn industry tools like Burp Suite, Nmap,
+                        Metasploit, and Kali Linux.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm p-4">
+                    <h4 class="fw-bold">Career Guidance</h4>
+                    <p>
+                        Build portfolios, solve challenges,
+                        and prepare for cybersecurity roles.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOUNDER STORY -->
+<section class="section dark">
+    <div class="container">
+        <div class="row align-items-center g-5">
+
+            <div class="col-md-6 order-md-2">
+                <img src="{% static 'img/images1.jpg' %}" 
+                     class="img-fluid rounded shadow-lg" 
+                     alt="Founder Image">
+            </div>
+
+            <div class="col-md-6 order-md-1">
+                <h2 class="fw-bold mb-3">Meet Our Founder</h2>
+                <p class="lead">
+                    Hi, I’m Peter Charles Habakkuk, a passionate ethical hacker and Django developer. 
+                    I created Eccentric Academy to train students with practical, hands-on cybersecurity skills that get results in the real world.
+                </p>
+                <p>
+                    My journey started 5 years ago when I realized that most cybersecurity training was too theoretical.
+                    I wanted a platform where students could practice real attacks safely, build portfolios, and launch careers.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- LAB SCREENSHOTS / PLATFORM PREVIEW -->
+<section class="section">
+    <div class="container">
+        <h2 class="fw-bold text-center mb-5">Inside Our Labs</h2>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'academy/images/lab1.jpg' %}" 
+                         class="card-img-top" 
+                         alt="Lab Screenshot">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'academy/images/lab2.jpg' %}" 
+                         class="card-img-top" 
+                         alt="Lab Screenshot">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <img src="{% static 'academy/images/lab3.jpg' %}" 
+                         class="card-img-top" 
+                         alt="Lab Screenshot">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- INTRO VIDEO EMBED -->
+<section class="section dark text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-4">Watch Our Academy in Action</h2>
+        <p class="lead mb-4">
+            Take a quick tour of our platform and see how we teach real ethical hacking skills.
+        </p>
+
+        <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+                    title="Eccentric Academy Intro Video" 
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- WHY TRUST US -->
+<section class="section">
+    <div class="container">
+        <h2 class="fw-bold text-center mb-5">
+            Why Trust Eccentric Academy?
+        </h2>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card bg-transparent border-light p-4 h-100 shadow-sm">
+                    <h5 class="fw-bold">✔ Built by Practitioners</h5>
+                    <p>
+                        Our curriculum is designed by ethical hackers
+                        actively working in the field.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card bg-transparent border-light p-4 h-100 shadow-sm">
+                    <h5 class="fw-bold">✔ Not Just Videos</h5>
+                    <p>
+                        Live classes, challenges, mentorship,
+                        and real-world simulations.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-3">
+            Ready to Start Your Cybersecurity Journey?
+        </h2>
+
+        <p class="lead mb-4">
+            Join Eccentric Academy and learn ethical hacking the right way.
+        </p>
+
+        <a href="{% url 'home' %}#pricing"
+           class="btn btn-primary btn-lg px-5 animate-pulse">
+            View Pricing Plans
+        </a>
+    </div>
+</section>
+
+{% endblock %}

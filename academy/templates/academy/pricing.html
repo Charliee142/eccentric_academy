@@ -1,0 +1,103 @@
+{% extends "academy/base.html" %}
+{% block title %}Pricing Plans | Eccentric Academy{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero text-center">
+    <div class="container">
+        <h1 class="display-5 fw-bold mb-3 animate-pop">
+            Choose Your Learning Path
+        </h1>
+        <p class="lead mb-4">
+            Flexible pricing plans designed to take you from beginner to advanced ethical hacker.
+        </p>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section class="section">
+    <div class="container">
+
+        <div class="row g-4 justify-content-center">
+
+            {% for plan in plans %}
+            <div class="col-md-4">
+                <div class="card pricing-card h-100 text-center p-4 animate-pop
+                    {% if plan.level == 'intermediate' %} highlight {% endif %}">
+
+                    <!-- Plan Name -->
+                    <h3 class="fw-bold mb-2">{{ plan.name }}</h3>
+
+                    <!-- Price -->
+                    <h2 class="fw-bold text-primary my-3">
+                        ₦{{ plan.price }}
+                    </h2>
+
+                    <!-- Duration -->
+                    <p class="text-muted mb-3">
+                        {{ plan.duration_weeks }} Weeks Access
+                    </p>
+
+                    <!-- Description -->
+                    <p class="mb-4">
+                        {{ plan.description }}
+                    </p>
+
+                    <!-- Features -->
+                    {% if plan.features %}
+                    <ul class="list-unstyled text-start mb-4">
+                        {% for feature in plan.features.splitlines %}
+                        <li class="mb-2">
+                            ✔ {{ feature }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    <!-- CTA -->
+                    <a href="{% url 'plan_detail' plan.slug %}"
+                       class="btn btn-primary btn-lg w-100 animate-pulse">
+                        View Courses
+                    </a>
+
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</section>
+
+<!-- TRUST / GUARANTEE -->
+<section class="section dark text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-3 animate-pop">Why Choose Eccentric Academy?</h2>
+        <p class="lead mb-4">
+            Industry-focused curriculum, hands-on labs, real-world projects,
+            and instructor-led guidance.
+        </p>
+
+        <div class="row g-4 mt-4">
+            <div class="col-md-4">✔ Live Instructor-Led Training</div>
+            <div class="col-md-4">✔ Hands-On Labs & Vulnerable Apps</div>
+            <div class="col-md-4">✔ Career & Portfolio Support</div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="section text-center">
+    <div class="container">
+        <h2 class="fw-bold mb-3 animate-pop">Ready to Start Your Journey?</h2>
+        <p class="lead mb-4">
+            Pick a plan and begin your ethical hacking career today.
+        </p>
+        <a href="{% url 'contact' %}" class="btn btn-outline-primary btn-lg px-5">
+            Talk to an Advisor
+        </a>
+    </div>
+</section>
+
+{% endblock %}

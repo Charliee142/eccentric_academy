@@ -1,0 +1,86 @@
+{% extends "academy/base.html" %}
+{% load static %}
+
+{% block title %}Pricing Plans | Eccentric Academy{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="bg-dark text-light py-5 text-center">
+    <div class="container">
+        <h1 class="fw-bold">Choose Your Learning Path</h1>
+        <p class="lead mt-3">
+            Enroll through structured pricing plans — just like real cybersecurity bootcamps.
+        </p>
+    </div>
+</section>
+
+<!-- PRICING PLANS -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+
+            {% for plan in plans %}
+            <div class="col-md-4">
+                <div class="card h-100 shadow-lg border-0 {% if plan.is_popular %}border-primary{% endif %}">
+                    
+                    {% if plan.is_popular %}
+                    <div class="badge bg-primary position-absolute top-0 end-0 m-3">
+                        Most Popular
+                    </div>
+                    {% endif %}
+
+                    <div class="card-body text-center p-4">
+                        <h4 class="fw-bold">{{ plan.name }}</h4>
+                        <p class="text-muted">{{ plan.short_description }}</p>
+
+                        <h2 class="my-4">
+                            ₦{{ plan.price|floatformat:0 }}
+                        </h2>
+
+                        <ul class="list-unstyled text-start mb-4">
+                            {% for feature in plan.features.all %}
+                            <li class="mb-2">
+                                ✅ {{ feature.title }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        
+                        <a href=""
+                           class="btn btn-primary w-100">
+                            View Courses
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">No pricing plans available at the moment.</p>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+<!-- TRUST SECTION -->
+<section class="bg-light py-5">
+    <div class="container text-center">
+        <h3 class="fw-bold">Why Learn With Eccentric Academy?</h3>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <h5>🛡️ Real-World Hacking Labs</h5>
+                <p>Practice on vulnerable apps and live attack simulations.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>🎓 Structured Curriculum</h5>
+                <p>Beginner → Advanced roadmap designed by security professionals.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>🚀 Career-Focused</h5>
+                <p>Build a portfolio, get certifications & real hacking experience.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

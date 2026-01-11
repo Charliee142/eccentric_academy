@@ -1,0 +1,67 @@
+{% extends "academy/base.html" %}
+{% block title %}{{ plan.name }} Plan | Eccentric Academy{% endblock %}
+
+{% block content %}
+
+<!-- PLAN HEADER -->
+<section class="bg-dark text-light py-5">
+    <div class="container text-center">
+        <h1 class="fw-bold">{{ plan.name }} Plan</h1>
+        <p class="lead">{{ plan.description }}</p>
+
+        <h2 class="my-3">₦{{ plan.price|floatformat:0 }}</h2>
+
+        {% if user.is_authenticated %}
+            {% if has_access %}
+                <button class="btn btn-success btn-lg" disabled>
+                    ✅ You already own this plan
+                </button>
+            {% else %}
+                <a href="{% url 'plans:enroll' plan.slug %}"
+                   class="btn btn-primary btn-lg">
+                    Enroll Now
+                </a>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'account_login' %}?next={{ request.path }}"
+               class="btn btn-warning btn-lg">
+                Login to Enroll
+            </a>
+        {% endif %}
+    </div>
+</section>
+
+<!-- COURSES UNDER PLAN -->
+<section class="py-5">
+    <div class="container">
+        <h3 class="fw-bold mb-4">Courses Included</h3>
+
+        <div class="row g-4">
+            {% for course in courses %}
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="fw-bold">{{ course.title }}</h5>
+                        <p class="text-muted">{{ course.short_description }}</p>
+
+                        {% if has_access %}
+                            <a href="{% url 'academy:course_detail' course.slug %}"
+                               class="btn btn-outline-success w-100">
+                                Start Course
+                            </a>
+                        {% else %}
+                            <button class="btn btn-outline-secondary w-100" disabled>
+                                Locked 🔒
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No courses found under this plan.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
